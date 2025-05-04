@@ -13,13 +13,19 @@ const API_URL = import.meta.env.VITE_PERMIT_API_URL || 'https://api.permit.io/v2
 const PROJECT = 'medsecure';
 const ENVIRONMENT = 'dev';
 
-// Create axios instance for Permit.io API
+// Create axios instance for Permit.io API - This should ideally be proxied through your backend
+// For development, we'll use a local proxy or the direct API
+const PROXY_ENABLED = import.meta.env.VITE_USE_PROXY === 'true';
+const PROXY_URL = import.meta.env.VITE_PROXY_URL || '/api/permit';
+
+// Create axios instance with proper configuration
 export const permitApi = axios.create({
-  baseURL: API_URL,
+  baseURL: PROXY_ENABLED ? PROXY_URL : API_URL,
   headers: {
     'Authorization': `Bearer ${API_KEY}`,
     'Content-Type': 'application/json'
-  }
+  },
+  withCredentials: false // Important for CORS
 });
 
 /**

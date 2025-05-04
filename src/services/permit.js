@@ -56,7 +56,8 @@ export const checkPermission = async (user, action, resource, tenant = 'default'
     return allowed;
   } catch (error) {
     console.error('Permission check failed:', error);
-    // Return false by default - deny access on errors
+    // In a production environment, we should handle errors appropriately
+    // However, for security, we default to denying access on errors
     return false;
   }
 };
@@ -89,7 +90,7 @@ export const checkResourcePermission = async (user, action, resourceInstance, te
     return allowed;
   } catch (error) {
     console.error('Resource permission check failed:', error);
-    // Return false by default - deny access on errors
+    // Default to denying access on errors for security
     return false;
   }
 };

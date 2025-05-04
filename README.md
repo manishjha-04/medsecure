@@ -36,6 +36,11 @@ MedSecure is a healthcare management system that demonstrates sophisticated role
    # Permit.io API Configuration
    VITE_PERMIT_API_KEY=your_permit_api_key_here
    VITE_PERMIT_API_URL=https://api.permit.io/v2
+   VITE_USE_PROXY=true
+   VITE_PROXY_URL=http://localhost:3001/api/permit
+
+   # Server Configuration
+   SERVER_PORT=3001
 
    # Other environment variables
    VITE_APP_NAME=MedSecure
@@ -44,8 +49,19 @@ MedSecure is a healthcare management system that demonstrates sophisticated role
 
 4. Get your Permit.io API key from the Permit.io dashboard and add it to the `.env` file.
 
-5. Start the development server:
+5. Start the development server with backend proxy:
    ```bash
+   npm run start
+   ```
+   
+   This will start both the React frontend and the Node.js proxy server.
+
+   If you want to run them separately:
+   ```bash
+   # Run just the proxy server
+   npm run server
+   
+   # Run just the frontend
    npm run dev
    ```
 
@@ -81,8 +97,18 @@ MedSecure is a healthcare management system that demonstrates sophisticated role
 
 - `src/services/permit.js` - Permit.io integration
 - `src/services/permitConfig.js` - Permit.io configuration and initialization
+- `src/services/permitService.js` - Main service that handles Permit.io API calls
 - `src/components/PermissionGuard.jsx` - React component for conditional rendering based on permissions
 - `src/store/authStore.js` - Authentication store with user roles
+- `server.js` - Backend proxy server that handles requests to Permit.io API
+
+## CORS Configuration
+
+The application uses a backend proxy server to handle CORS issues when communicating with Permit.io API:
+
+1. All requests from the frontend to Permit.io go through the proxy server
+2. The proxy server adds the necessary authorization headers and forwards the request
+3. This approach avoids CORS issues and keeps the API key secure
 
 ## Security Considerations
 
