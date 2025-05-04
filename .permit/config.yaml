@@ -1,0 +1,7 @@
+default_context: dev
+contexts:
+  dev:
+    api_url: https://api.permit.io/v2
+    api_key: ${PERMIT_API_KEY}
+    project: medsecure
+    environment: dev 
